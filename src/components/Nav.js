@@ -40,7 +40,10 @@ const NavStyles = styled.nav`
     font-size: 3rem;
     text-decoration: none;
     &:hover {
-      color: red;
+      color: var(--red);
+    }
+    &[aria-current='page'] {
+      color: var(--red);
     }
   }
 `;

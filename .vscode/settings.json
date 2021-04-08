@@ -32,5 +32,6 @@
   "prettier.disableLanguages": ["javascript", "javascriptreact"],
   "peacock.color": "#FFC600",
   "workbench.sideBar.location": "right",
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "afterDelay",
+  "terminal.integrated.fontFamily": "monospace"
 }

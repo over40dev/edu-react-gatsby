@@ -1,15 +1,15 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import PizzaList from '../components/PizzaList';
+import ToppingsFilter from '../components/ToppingsFilter';
 
 // where do the PROPS come from (not passed directly) - Gatsby magic!!!
 export default function PizzasPage({ data }) {
   const pizzas = data.pizzas.nodes;
-  // console.log(pizzas);
 
   return (
     <>
-      <p>Hey! There are {pizzas.length} pizzas!</p>
+      <ToppingsFilter />
       <PizzaList pizzas={pizzas} />
     </>
   );

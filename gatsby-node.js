@@ -27,7 +27,6 @@ async function turnPizzasIntoPages({ graphql, actions }) {
       path: `pizza/${pizza.slug.current}`,
       component: pizzaTemplate,
       context: {
-        over40dev: 'is awesome!!',
         slug: pizza.slug.current,
       },
     });

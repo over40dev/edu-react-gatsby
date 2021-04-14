@@ -9,7 +9,7 @@ export default function PizzasPage({ data, pageContext }) {
 
   return (
     <>
-      {/* <ToppingsFilter activeTopping={}/> */}
+      <ToppingsFilter activeTopping={pageContext.topping} />
       <PizzaList pizzas={pizzas} />
     </>
   );

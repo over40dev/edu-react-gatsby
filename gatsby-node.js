@@ -33,11 +33,44 @@ async function turnPizzasIntoPages({ graphql, actions }) {
   });
 }
 
+async function turnToppingsIntoPages({ graphql, actions }) {
+  // 1. Get the template
+  const toppingsTemplate = path.resolve(`./src/pages/pizzas.js`);
+  // 2. Query all the toppings
+  const { data } = await graphql(`
+    query {
+      toppings: allSanityTopping {
+        nodes {
+          id
+          name
+        }
+      }
+    }
+  `);
+
+  // 3. createPage for that topping
+  data.toppings.nodes.forEach((topping) => {
+    actions.createPage({
+      path: `topping/${topping.name}`,
+      component: toppingsTemplate,
+      context: {
+        topping: topping.name,
+        toppingRegex: `/${topping.name}/i`,
+      },
+    });
+  });
+  // 4. Pass topping data to Pizza.js
+}
+
 export async function createPages(params) {
   // create pages dynamically
-  // 1. Pizzas
-  // use await because we are calling async function
-  await turnPizzasIntoPages(params);
-  //  2. Toppings
+  // Pizzas and Toppings
+  // Since both can be run **concurrently** and both are **JavaScript Promise-based** we can `await Promise.all([...])` and pass an array of **Promises**.
+  // Wait for all promises to be resolved before finishing this function (i.e. go web page)
+  await Promise.all([
+    turnPizzasIntoPages(params),
+    turnToppingsIntoPages(params),
+  ]);
+
   //  3. Slicemasters
 }

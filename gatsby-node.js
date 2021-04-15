@@ -85,7 +85,7 @@ async function fetchBeersAndTurnIntoNodes({
     };
     // 3. Create a Node for each beer
     // pass ONE object... spread values into it
-    actions.createNode({ beer, ...nodeMeta });
+    actions.createNode({ ...beer, ...nodeMeta });
   }
 }
 

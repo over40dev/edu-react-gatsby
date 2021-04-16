@@ -63,6 +63,33 @@ async function turnToppingsIntoPages({ graphql, actions }) {
   // 4. Pass topping data to Pizza.js
 }
 
+async function turnSlicemastersIntoPages({ graphql, actions }) {
+  // 1. Query all slicemasters
+  const { data } = await graphql(`
+    query {
+      slicemasters: allSanityPerson {
+        totalCount
+        nodes {
+          name
+          id
+          slug {
+            current
+          }
+        }
+      }
+    }
+  `);
+  // 2. TODO: Turn each slicemaster into their own page
+  // 3. Figure out how many pages there are based on how many slicemasters there are, and how many per page
+  // Everything from .ENV, even numbers, come in as Strings so we need to convert to number
+  const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE);
+  const pageCount = Math.ceil(data.slicemasters.totalCount / pageSize);
+  // 4. Loop from 1 to n and create the pages for them
+  Array.from({ length: pageCount }).forEach((_, idx) => {
+    console.log(idx + 1);
+  });
+}
+
 async function fetchBeersAndTurnIntoNodes({
   actions,
   createNodeId,
@@ -106,6 +133,7 @@ export async function createPages(params) {
   await Promise.all([
     turnPizzasIntoPages(params),
     turnToppingsIntoPages(params),
+    turnSlicemastersIntoPages(params),
   ]);
 
   //  3. Slicemasters

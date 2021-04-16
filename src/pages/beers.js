@@ -9,7 +9,7 @@ const BeerGridStyle = styled.div`
 `;
 
 const SingleBeerStyles = styled.div`
-  border: 10px solid var(--grey);
+  border: 1px solid var(--grey);
   padding: 2rem;
   text-align: center;
   img {

@@ -137,7 +137,7 @@ export async function sourceNodes(params) {
 // Gatsby API Function (Hook) to Create Pages
 export async function createPages(params) {
   // create pages dynamically
-  // Pizzas and Toppings
+  // Pizzas, Toppings and Slicemasters
   // Since both can be run **concurrently** and both are **JavaScript Promise-based** we can `await Promise.all([...])` and pass an array of **Promises**.
   // Wait for all promises to be resolved before finishing this function (i.e. go web page)
   await Promise.all([
@@ -145,6 +145,4 @@ export async function createPages(params) {
     turnToppingsIntoPages(params),
     turnSlicemastersIntoPages(params),
   ]);
-
-  //  3. Slicemasters
 }

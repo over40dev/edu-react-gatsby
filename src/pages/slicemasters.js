@@ -41,7 +41,7 @@ const SlicemasterStyles = styled.div`
 export default function SliceMastersPage({ data: { slicemasters } }) {
   return (
     <>
-      <h2>There are {slicemasters.totalCount} Slice Masters here!</h2>
+      <p>{process.env.GATSBY_PAGE_SIZE}</p>
       <SlicemasterGridStyles>
         {slicemasters.nodes.map((person) => (
           <SlicemasterStyles key={person.id}>

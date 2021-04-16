@@ -85,8 +85,18 @@ async function turnSlicemastersIntoPages({ graphql, actions }) {
   const pageSize = parseInt(process.env.GATSBY_PAGE_SIZE);
   const pageCount = Math.ceil(data.slicemasters.totalCount / pageSize);
   // 4. Loop from 1 to n and create the pages for them
-  Array.from({ length: pageCount }).forEach((_, idx) => {
-    console.log(idx + 1);
+  Array.from({ length: pageCount }).forEach((_, i) => {
+    console.log(i + 1);
+    actions.createPage({
+      path: `/slicemasters/${i + 1}`,
+      component: path.resolve(`./src/pages/slicemasters.js`),
+      // This data is passed to the template when we create it
+      context: {
+        skip: i * pageSize,
+        currentPage: i + 1,
+        pageSize,
+      },
+    });
   });
 }
 
@@ -127,7 +137,7 @@ export async function sourceNodes(params) {
 // Gatsby API Function (Hook) to Create Pages
 export async function createPages(params) {
   // create pages dynamically
-  // Pizzas and Toppings
+  // Pizzas, Toppings and Slicemasters
   // Since both can be run **concurrently** and both are **JavaScript Promise-based** we can `await Promise.all([...])` and pass an array of **Promises**.
   // Wait for all promises to be resolved before finishing this function (i.e. go web page)
   await Promise.all([
@@ -135,6 +145,4 @@ export async function createPages(params) {
     turnToppingsIntoPages(params),
     turnSlicemastersIntoPages(params),
   ]);
-
-  //  3. Slicemasters
 }

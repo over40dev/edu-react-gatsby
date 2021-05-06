@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import PizzaList from '../components/PizzaList';
 import ToppingsFilter from '../components/ToppingsFilter';
+import SEO from '../components/SEO';
 
 // where do the PROPS come from (not passed directly) - Gatsby magic!!!
 export default function PizzasPage({ data, pageContext }) {
@@ -9,6 +10,13 @@ export default function PizzasPage({ data, pageContext }) {
 
   return (
     <>
+      <SEO
+        title={
+          pageContext.topping
+            ? `Pizzas with ${pageContext.topping}`
+            : `All Pizzas`
+        }
+      />
       <ToppingsFilter activeTopping={pageContext.topping} />
       <PizzaList pizzas={pizzas} />
     </>

@@ -2,18 +2,25 @@ import React, { useState } from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import SEO from '../components/SEO';
-import useForm from '../utils/useForm';
 import calculatePizzaPrice from '../utils/calculatePizzaPrice';
 import formatMoney from '../utils/formatMoney';
 import OrderStyles from '../styles/OrderStyles';
 import MenuItemStyles from '../styles/MenuItemStyles';
+import useForm from '../utils/useForm';
+import usePizza from '../utils/usePizza';
+import PizzaOrder from '../components/PizzaOrder';
 
 export default function OrderPage({ data }) {
+  const pizzas = data.pizzas.nodes;
   // could default the object to contain default values
   const { values, updateValue } = useForm({ name: '', email: '' });
+  const { order, addToOrder, removeFromOrder } = usePizza({
+    pizzas,
+    inputs: values,
+  });
+
   // can just default to an empty object
   // const { values, updateValue } = useForm({});
-  const pizzas = data.pizzas.nodes;
 
   return (
     <>
@@ -53,7 +60,16 @@ export default function OrderPage({ data }) {
               </div>
               <div>
                 {['S', 'M', 'L'].map((size) => (
-                  <button type="button" key={size}>
+                  <button
+                    type="button"
+                    key={size}
+                    onClick={() =>
+                      addToOrder({
+                        id: pizza.id,
+                        size,
+                      })
+                    }
+                  >
                     {size} {formatMoney(calculatePizzaPrice(pizza.price, size))}
                   </button>
                 ))}
@@ -63,6 +79,13 @@ export default function OrderPage({ data }) {
         </fieldset>
         <fieldset className="order">
           <legend>Order</legend>
+          {/* need to pass in remove function instead of getting it from
+          custom hook because using the custom hook would create a different state object */}
+          <PizzaOrder
+            order={order}
+            pizzas={pizzas}
+            removeFromOrder={removeFromOrder}
+          />
         </fieldset>
       </OrderStyles>
     </>

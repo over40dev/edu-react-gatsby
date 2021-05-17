@@ -24,7 +24,7 @@ const MenuItemStyles = styled.div`
     background: none;
     color: var(--red);
     font-size: 3rem;
-    position: absolute;
+    position: relative;
     top: 0;
     right: 0;
     box-shadow: none;

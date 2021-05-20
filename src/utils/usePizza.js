@@ -28,6 +28,7 @@ export default function usePizza({ pizzas, values }) {
     ]);
   }
   async function submitOrder(e) {
+    console.log(e.body);
     e.preventDefault();
     setLoading(true);
     setError(null);
